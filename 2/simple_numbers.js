@@ -10,7 +10,6 @@ function getSimpleNumbers(countNumbers=10) {
     }
 
     let numbers = [1, 2, 3,];
-    let i = 0;
     let flag = true;
     let num = 0;
     
@@ -23,21 +22,26 @@ function getSimpleNumbers(countNumbers=10) {
             num += 2;
         }
         
-        i = 1;
-        
-        for(i; i < numbers.length; i++) {
-
-            if( (Math.sqrt(numbers[i]) > num) || !(num % numbers[i])) {
+        for(let i = 1; i < numbers.length; i++) {
+            
+            if( Math.sqrt(numbers[i]) > num) {
+                numbers[numbers.length] = num;
+                flag = true;
+                break;
+            }
+            else if(!(num % numbers[i])) {
                 flag = false;
                 break;
             }
+            else if(i === numbers.length -1 ) {
+                numbers[numbers.length] = num;
+                flag = true;
+                break;
+
+            }
+
         }
         
-        if(i === numbers.length) {
-            flag = true;
-            numbers[numbers.length] = num;
-        }
-
     }
 
     return numbers;
