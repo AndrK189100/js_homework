@@ -153,7 +153,7 @@ let catalog  = new GoodsList();
 let basket = new Basket();
 
 let good;
-
+ 
 for(let i=1; i < 6; i++) {
     good = new Good(i, `Name${i}`, `Description${i}`, [i, i + 6], Math.round(Math.random()*100), true);
     catalog.add(good);
