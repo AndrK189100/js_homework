@@ -18,7 +18,7 @@ function getSimpleNumbers(countNumbers=10) {
         if(flag) {
         num = numbers.at(-1) + 2;
         }
-        else {
+        else {m
             num += 2;
         }
         
