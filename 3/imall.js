@@ -43,22 +43,26 @@ class GoodsList {
     }
 
     getGood(id) {
-        for(let i = 0; i < this.#goods.length; i++) {
-            if (this.#goods[i].id === id) {
-                return this.#goods[i];
-            }
+
+        let index = this.#goods.findIndex(good => good.id === id);
+        if (index === -1){
+            return false;
         }
-        return false;
+        else{
+            return this.#goods[index];
+        }
     }
 
     setAvailable(id, available) {
-        for(let i = 0; i < this.#goods.length; i++) {
-            if (this.#goods[i].id === id) {
-                this.#goods[i].available = available;
-                break;
-            }    
+
+        let index = this.#goods.findIndex(good => good.id === id);
+        if (index === -1){
+            return false;
         }
-        
+        else {
+            this.#goods[index].available = available;
+            return true;
+        }
     }
 
     add(good) {
@@ -66,13 +70,16 @@ class GoodsList {
     }
 
     remove(id) {
-        for(let i=0; i < this.#goods.length; i++) {
-            if (this.#goods[i].id === id) {
-                this.#goods.splice(i, 1);
-                break;
-            }
+
+        let index = this.#goods.findIndex(good => good.id === id);
+        if (index === -1){
+            return false;
         }
-    }
+        else {
+            this.#goods.splice(index, 1);
+            return true;
+        }
+     }
 
 }
 
@@ -91,6 +98,7 @@ class Basket {
     }
 
     get totalAmount() {
+
         return this.basketGoods.reduce((pBasketGood, cBasketGood) => pBasketGood.amount + cBasketGood.amount);
     }
 
@@ -102,29 +110,34 @@ class Basket {
 
     add(good, amount) {
         if(good.available) {
-            for(let i=0; i < this.basketGoods.length; i++) {
-                if (this.basketGoods[i].id === good.id) {
-                    this.basketGoods[i].amount += amount;
-                    return true;
-                }
-            }
-            this.basketGoods[this.basketGoods.length] = new BasketGood(good, amount);
-            return true;
-        }
-        return false;
-    }
 
-    remove (good, amount) {
-        for(let i=0; i < this.basketGoods.length; i++) {
-            if (this.basketGoods[i].id === good.id) {
-                this.basketGoods[i].amount -= amount;
-                if (this.basketGoods[i].amount < 1) {
-                    this.basketGoods.splice(i, 1);
-                }
+            let index = this.basketGoods.findIndex(basketGood => basketGood.id === good.id);
+            if (index === -1) {
+                this.basketGoods[this.basketGoods.length] = new BasketGood(good, amount);
+            return true;
+            }
+            else {
+                this.basketGoods[index].amount += amount;
                 return true;
             }
         }
         return false;
+        
+    }
+
+    remove (good, amount) {
+
+        let index = this.basketGoods.findIndex(basketGood => basketGood.id === good.id);
+        if (index === -1) {
+            return false;
+        }
+        else {
+            this.basketGoods[index].amount -= amount;
+            if (this.basketGoods[index].amount < 1) {
+                this.basketGoods.splice(index, 1);
+            }
+            return true; 
+        }
     }
 
     clear() {
@@ -135,11 +148,9 @@ class Basket {
     removeUnavaliable(goods) {
         let buffer = goods.filter(good => !good.available);
         for(let i=0; i < buffer.length; i++) {
-            for(let j=0; j < this.basketGoods.length; j++){
-                if (buffer[i].id === this.basketGoods[j].id) {
-                    this.basketGoods.splice(j,1);
-                    break;
-                }
+            let index = this.basketGoods.findIndex(good => good.id === buffer[i].id);
+            if (index !== -1) {
+                this.basketGoods.splice(index, 1);
             }
         }
         return true;
