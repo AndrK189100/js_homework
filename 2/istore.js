@@ -24,7 +24,7 @@ function addToCart(id, amount) {
     
     for(let i = 0; i < goods.length; i++) {
         if((goods[i].id === id) && (goods[i].available)) {
-            
+             
             for(let j =0; j < shoppingCart.length; j++){
                 if(shoppingCart[j].good === goods[i].id){
                     shoppingCart[j].amount += amount;
