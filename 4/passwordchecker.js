@@ -7,15 +7,17 @@ function getPasswordChecker(rightPassword) {
 }
 
 
-let checkPassord1 = getPasswordChecker('123');
-let checkPassord2 = getPasswordChecker('abc')
+let PasswordChecker1 = getPasswordChecker('123');
+let PasswordChecker2 = getPasswordChecker('abc')
 
-console.log(checkPassord1('123'));
-console.log(checkPassord1('1235'));
+console.clear()
+
+console.log(PasswordChecker1('123'));
+console.log(PasswordChecker1('1235'));
 
 console.log('=============================\n');
 
-console.log(checkPassord2('abc'));
-console.log(checkPassord2('bca'));
+console.log(PasswordChecker2('abc'));
+console.log(PasswordChecker2('bca'));
 
 
