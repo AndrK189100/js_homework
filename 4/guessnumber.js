@@ -1,14 +1,11 @@
 
 const rl = require('readline').createInterface(process.stdin, process.stdout);
-
-function getIncr(i = 0) {
-    
-    return function () {return i +=1;}
-}
+let fs = require('fs');
 
 function gameStart(){
-    
-    let count = getIncr();
+    console.clear();
+    let count = 1;
+    const fileName = 'guessNumber.log';
     
     rl.question('Сыграем? Y/n ', (answer) => {
 
@@ -16,61 +13,67 @@ function gameStart(){
             rl.write('Угадайте число от [1; 10]\n');
             guessNumber = Math.floor(Math.random() * 10) + 1;
             console.log('Число: ', guessNumber);
-            game(count);
+            fs.writeFile(fileName, `Старт игры.\nЗагаданное число: ${guessNumber}\n`, 'utf-8', (err) => {/*Обработка ошибки)))*/})
+            game();
             
         }
-        else if (answer.toLowerCase() === 'n') {rl.close(); return;}
+        else if (answer.toLowerCase() === 'n') {
+            rl.close();
+            console.clear();
+            fs.appendFile(fileName, 'Выход из игры.', 'utf-8', (err) => {/*Обработка ошибки)))*/});
+            return;
+        }
         else {
             console.clear();
             rl.write('Неверный ввод!\n')
-            //rl.close();
             gameStart();
-        
-        }
-        
-        }
-        
-
-    )
-    function game() {
-
+         }
+    })
     
-
+    function game() {
+    
+        rl.write(`Поытка: ${count}\n`)
         rl.question('Введите целое число от 1 до 10 или q для выхода: ', (answer) => {
             if(!Number.isInteger(Number(answer))) {
-                if(answer.toLowerCase() === 'q') {rl.close(); return;}
-                rl.write('Неверный ввод1\n ');
+                if(answer.toLowerCase() === 'q') {
+                    fs.appendFile(fileName, 'Выход из игры.', 'utf-8', (err) => {/*Обработка ошибки)))*/})
+                    rl.close(); 
+                    console.clear();
+                    return;
+                }
+                rl.write('Неверный ввод\n ');
                 game();
                 return;
-                
             }
+ 
             if(Number(answer) > 10 || Number(answer) < 1) {
                 rl.write('Неверный ввод\n ');
                 game();
                 return;
             }
+
             if(Number(answer) < guessNumber) {
+                fs.appendFile(fileName, `Попытка: ${count}. Введено число: ${answer} - меньше загаданного.\n`, 'utf-8', (err) => {/*Обработка ошибки)))*/})
                 rl.write('Введенное число меньше\n');
-                count();
+                count++;
                 game();
                 return;
             }
             else if(Number(answer) > guessNumber) {
+                fs.appendFile(fileName, `Попытка: ${count}. Введено число: ${answer} - больше загаданного.\n`, 'utf-8', (err) => {/*Обработка ошибки)))*/})
                 rl.write('Введенное число больше\n');
-                count();
+                count++;
                 game();
                 return;
             }
             else {
-                rl.write(`Число угадано. Количество попыток: ${count()}\n`);
+                fs.appendFile(fileName, `Попытка: ${count}. Введено число: ${answer} - равно загаданному.\n Всего попыток: ${count}\n=========\n`,
+                                'utf-8', (err) => {/*Обработка ошибки)))*/});
+                rl.write(`Число угадано. Количество попыток: ${count}\n`);
                 rl.question('Нажми ввод:', (answer) => {gameStart();})
             }
-    
         })
-        
-    
     }
-
 }
 
 gameStart();
