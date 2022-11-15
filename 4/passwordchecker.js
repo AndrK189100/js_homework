@@ -7,8 +7,8 @@ function getPasswordChecker(rightPassword) {
 }
 
 
-let PasswordChecker1 = getPasswordChecker('123');
-let PasswordChecker2 = getPasswordChecker('abc')
+const PasswordChecker1 = getPasswordChecker('123');
+const PasswordChecker2 = getPasswordChecker('abc')
 
 console.clear()
 
