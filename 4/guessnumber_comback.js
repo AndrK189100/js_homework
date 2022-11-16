@@ -6,7 +6,7 @@ const questionPromise = function(query) {
 
 
 async function game() {
-    let count = 1;
+    let count = 0;
     let guessNumber = 0;
     while(true) {
         const answer =await questionPromise('Сыграем ? Y/n ');
@@ -27,6 +27,7 @@ async function game() {
         }
         rl.write('Угадайте число от [1; 10]\n');
         guessNumber = Math.floor(Math.random() * 10) + 1;
+        count = 1;
         console.log('Число: ', guessNumber);
         while(true) {
             rl.write(`Поытка: ${count}\n`);
