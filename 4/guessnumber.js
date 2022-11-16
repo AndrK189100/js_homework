@@ -3,7 +3,7 @@ const rl = require('readline').createInterface(process.stdin, process.stdout);
 let fs = require('fs');
 
 function gameStart(){
-    console.clear();
+    //console.clear();
     let count = 1;
     const fileName = 'guessNumber.log';
     

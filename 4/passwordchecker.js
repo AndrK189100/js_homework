@@ -1,9 +1,6 @@
 
 function getPasswordChecker(rightPassword) {
-    rightPassword = rightPassword;
-    
-    return (checkPassword) => { return (rightPassword === checkPassword) ? true:false};
-
+    return (checkPassword) =>  {return rightPassword === checkPassword};
 }
 
 
